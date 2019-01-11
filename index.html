@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Rock, Paper, Scissors</h1>
+            <div class="row">
+                <div id="rock" class="option">
+                    <img src="img/rock.jpeg" />
+                    <h3 class="title">Rock</h3>
+                </div>
+                <div id="paper" class="option">
+                    <img src="img/paper.jpg" />
+                    <h3 class="title">Paper</h3>
+                </div>
+                <div id="scissors" class="option">
+                    <img src="img/scissors.jpg" />
+                    <h3 class="title">Scissors</h3>
+                </div>
+            </div>
+            <h2 id="results"></h2>
+        </div>
+        <script>
+            // must loop
+            let options = document.getElementsByClassName('option');
+            for(let i = 0; i < options.length; i++){
+                options[i].addEventListener("click", function(){
+                    let computer = getComputerMove();
+                    let human = this.id
+                    document.getElementById('results').innerHTML = playRound(computer, human);
+                }); 
+            }
+          
+
+          function getComputerMove(){
+            let move = Math.floor(Math.random() * 3) + 1;
+            if( move === 1 ){
+                return 'rock';
+            }else if( move === 2 ){
+                return 'paper';
+            }else{
+                return 'scissors';
+            }
+          }
+
+          function playRound(com, human){
+              //  1 = win
+              //  0 = tie
+              // -1 = lose
+            if( findWinner(com, human) == 1 ){
+                return `Player wins, ${human} beats ${com}.`;
+            } else if(findWinner(com, human) == -1){
+                return `Computers wins, ${com} beats ${human}.`;
+            } else{
+                return "It's a tie.";
+            }
+          }
+
+          function findWinner(com, human){
+              // paper beats rock
+              // scissors beats paper
+              // rock beats scissors
+              if( com == human ) return 0;
+
+              if( com == 'paper' && human == 'rock' ) return -1;
+              if( com == 'scissors' && human == 'paper' ) return -1;
+              if( com == 'rock' && human == 'scissors' ) return -1;
+
+              if( human == 'paper' && com == 'rock' ) return 1;
+              if( human == 'scissors' && com == 'paper' ) return 1;
+              if( human == 'rock' && com == 'scissors' ) return 1;
+
+          }
+        </script>
+    </body>
+</html>
